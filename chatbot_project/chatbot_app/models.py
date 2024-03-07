@@ -1,12 +1,13 @@
 from django.db import models
 
+
 class ChatSession(models.Model):
-    session_id = models.CharField(max_length=255, unique=True)
+    session_id = models.CharField(max_length=255)
+
 
 class ChatLog(models.Model):
     session = models.ForeignKey(ChatSession, on_delete=models.CASCADE)
     pdf_name = models.CharField(max_length=255, blank=True, null=True)
-    pdf_path = models.FileField(upload_to='uploads/', blank=True, null=True)
     query_question = models.TextField()
     response_text = models.TextField(blank=True, null=True)
 
