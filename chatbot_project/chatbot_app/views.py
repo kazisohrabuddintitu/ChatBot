@@ -16,20 +16,23 @@ BASE_DIR = settings.BASE_DIR
 # function for existing pdf, session id with new question
 class ChatLogCreateView(APIView):
     def post(self, request, session_id, query_question, format=None):
+        session_id = request.data.get('session', {}).get('session_id', None)
         query_question = request.data.get('query_question', query_question)
 
         # Check if a ChatLog with the given session ID exists
-        chat_logs = ChatLog.objects.filter(session_id=session_id)
-
-        if chat_logs.exists():
-            pdf_name = chat_logs.first().pdf_name
+        chat_session = ChatSession.objects.filter(session_id=session_id).first()
+        if chat_session:
+            # Retrieve all ChatLogs related to the ChatSession
+            chat_logs = ChatLog.objects.filter(session=chat_session)
+            
+            # Now can access the related fields or properties of ChatLog
+            pdf_name = chat_logs.first().pdf_name if chat_logs.exists() else None
         else:
             pdf_name = None
 
         # Get old chats before saving the new entry
         old_chats = chat_logs.values_list('response_text', flat=True)
        
-        print("query question: ", query_question)
         response_text = process_question(session_id, pdf_name, query_question)
        
         # Save to the database with the nested serializer data
@@ -49,7 +52,6 @@ class ChatLogCreateView(APIView):
 # view for new pdf with new session id and question 
 class NewChatLogCreateView(APIView):
     def post(self, request, session_id, pdf_name, query_question, format=None):
-        print("calling new chat")
         # Calling chatbot utility function
         response_text = process_question(session_id, pdf_name, query_question)
         

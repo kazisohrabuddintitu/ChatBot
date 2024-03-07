@@ -28,7 +28,7 @@ if st.button("Get Response"):
             api_url = f"http://127.0.0.1:8000/api/chatlog/{session_id}/{question}/"
             
             # If PDF is not provided, call the existing session ID API
-            data = {"session_id": session_id, "query_question": question}
+            data = {"session": {"session_id": session_id}, "query_question": question}
             response = requests.post(api_url, json=data).json()
 
         # Display old and new chats
