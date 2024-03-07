@@ -31,13 +31,13 @@ The project follows a client-server architecture, where the Django backend serve
 
 ## Architecture Diagram
 
-![Project Architecture Diagram](Phots/chatbot.jpg)
+![Project Architecture Diagram](Photos/chatbot.jpg)
 
 ## Screenshots
 
-![Front page](Phots/1st.png)
-![New pdf and session id](Phots/new.png)
-![Already existed pdf](Phots/existing.png)
+![Front page](Photos/1st.png)
+![New pdf and session id](Photos/new.png)
+![Already existed pdf](Photos/existing.png)
 
 
 ## Installation
